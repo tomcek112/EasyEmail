@@ -11,5 +11,5 @@ def dataextract():
         dataparser(to_add,no_attch,sub,text)
         return 200
 
-if __name__ = '__main__':
+if __name__ == '__main__':
     app.run(debug=True)
