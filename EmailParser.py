@@ -11,5 +11,9 @@ def dataextract():
         dataparser(to_add,no_attch,sub,text)
         return 200
 
+def dataparser(to_add,no_attch,sub,text):
+    twil()
+    return "LOL"
+
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run()
