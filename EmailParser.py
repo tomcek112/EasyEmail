@@ -3,6 +3,9 @@ from flask import Flask, request , make_response
 
 from pytagcloud import create_tag_image, make_tags
 from pytagcloud.lang.counter import get_tag_counts
+
+from reduction import *
+
 import os
 
 import twilio.twiml
@@ -20,21 +23,25 @@ def dataextract():
         sub = request.form['subject']
         text = request.form['text']
         updatedb(from_add,text)
-        twil(sub,from_add,text)
-        #datparser(sub,from_add,text)
+        dataparser(sub, from_add, text)
         return make_response('',200)
     else:
         return "Bla"
 
-'''def dataparser(sub,from_add,text):
-    twil(sub,from_add,parsed_text)
-'''
+def dataparser(sub, from_add, text):
+    reduction = Reduction()
+    reduction_ratio = 0.5
+    parsed_list = reduction.reduce(text, reduction_ratio)
+    parsed_text = ('').join(parsed_list)
+    print(parsed_text)
+    twil(sub, from_add, parsed_text)
+
 
 def twil(sub,from_add,text):
     account_sid = "ACd88394ca183bcaf1f02a2e8bcf5ebf55"
     auth_token = "5582a52e32afa122e7492d8a506b926d"
     client = TwilioRestClient(account_sid, auth_token)
-    message = client.messages.create(to="+447831002358",from_="+447903530001",body="from:"+from_add+" subject:"+sub+" body:"+ text)
+    message = client.messages.create(to="+447831002358",from_="+447903530001",body="from:"+from_add+" subject:"+sub+"\nbody:"+ text)
 
 def updatedb(from_add,mes):
     usr=table.find_one(from_addr=from_add)
@@ -55,7 +62,7 @@ def paid_respond():
     message = request.values.get('Body')
     message_elements = message.split(' ')
     resp = twilio.twiml.Response()
-    if message_elements[0].lower() == 'get':
+    if message_elements[0].lower() == 'wordcloud':
         message_elements.pop(0)
         addr = (' ').join(message_elements)
         usr = table.find_one(from_addr=addr)

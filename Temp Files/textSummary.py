@@ -1,7 +1,7 @@
-# coding=UTF-8
+'''# coding=UTF-8
 from __future__ import division
 import re
-from EmailParser.py import dataextract
+
   
 class SummaryTool(object):
  
@@ -79,46 +79,9 @@ class SummaryTool(object):
         return ("\n").join(summary)
  
  
-# Main method, just run "python summary_tool.py"
-def main():
- 
-    title = ""
- 
-    content = """
-    Dear Rapt Studio, 
-
-    My name is Nicole Bella, I'm a student at Cal State Long Beach, and part of the BFA Graphic Design program. I'm reaching out to you because I would love to have an opportunity to be part of your studio as an intern this summer. 
-
-    I've admired your studio's work for quite some time and I would love to gain experience in making such strong and beautiful design. When I look at your work, it feels refreshing, bold, and new. Your studio isn't afraid to take the extra step and time to make the project that much more special. I also admire the connection your studio makes with design and space because it flows so seamlessly; you consider every detail, big and small, to make a wholesome experience. It is apparent that you are so passionate and driven in what you do. I would love to work in such an environment because I would learn so much about making designs that are impactful. 
-
-    I hope you consider looking at my resume and portfolio; I believe I can be a positive addition to your studio. I am a determined and hardworking person, who would love to be inspired and take guidance from professionals like you. 
-
-    I've attached my resume to this email, and a link to my portfolio. If you have any thoughts or questions, please don't hesitate to contact me. 
-
-
-    Have a wonderful day!
-
-
-    Nicole Bella
-
-
-    nikolnicolebella@gmail.com
-    619.518.5939
-    Portfolio
-
-    """
- 
+def text_sum(sub,text):
     st = SummaryTool()
-    sentences_dic = st.get_sentences_ranks(content)
-    summary = st.get_summary(title, content, sentences_dic)
- 
-    print summary
- 
-    #print ""
-    #print "Original Length %s" % (len(title) + len(content))
-    #print "Summary Length %s" % len(summary)
-    #print "Summary Ratio: %s" % (100 - (100 * (len(summary) / (len(title) + len(content)))))
- 
- 
-if __name__ == '__main__':
-    main()
+    sentences_dic = st.get_sentences_ranks(text)
+    summary = st.get_summary(sub, text, sentences_dic)
+    return summary
+'''
