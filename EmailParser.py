@@ -19,9 +19,8 @@ def dataextract():
         from_add = request.form['from']
         sub = request.form['subject']
         text = request.form['text']
-        print(text)
         updatedb(from_add,text)
-        #twil(sub,from_add,text)
+        twil(sub,from_add,text)
         #datparser(sub,from_add,text)
         return make_response('',200)
     else:
@@ -59,12 +58,11 @@ def paid_respond():
     if message_elements[0].lower() == 'get':
         message_elements.pop(0)
         addr = (' ').join(message_elements)
-        addr = addr[:-1]
+        print(addr)
         usr = table.find_one(from_addr=addr)
         if usr:
              wordcloud(usr)
-             with resp.message("Loaded WebCloud") as m:
-                 m.media("./static/cloud_large.png")
+             resp.message("Image Generated https://a7e92201.ngrok.io/static/cloud_large.png")
         else:
             resp.message("Contact Not Found")
     else:
