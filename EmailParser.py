@@ -3,7 +3,7 @@ from flask import Flask, request , make_response
 
 from pytagcloud import create_tag_image, make_tags
 from pytagcloud.lang.counter import get_tag_counts
-from os import path
+import os
 
 import twilio.twiml
 import dataset
@@ -45,10 +45,10 @@ def updatedb(from_add,mes):
         table.insert(dict(from_addr=from_add, messages = mes))
 
 def wordcloud(user):
+    os.remove('./static/cloud.png')
     text = user['messages']
-    tags = make_tags(get_tag_counts(text), maxsize=120)
-    create_tag_image(tags, './static/cloud_large.png', size=(600, 600), fontname='Cuprum')
-
+    tags = make_tags(get_tag_counts(text), maxsize=100)
+    create_tag_image(tags, './static/cloud.png', size=(900, 600), fontname='Cuprum')
 
 @app.route("/respond", methods=['GET', 'POST'])
 def paid_respond():
@@ -58,16 +58,16 @@ def paid_respond():
     if message_elements[0].lower() == 'get':
         message_elements.pop(0)
         addr = (' ').join(message_elements)
-        print(addr)
         usr = table.find_one(from_addr=addr)
         if usr:
              wordcloud(usr)
-             resp.message("Image Generated https://a7e92201.ngrok.io/static/cloud_large.png")
+             resp.message("Image Generated https://a7e92201.ngrok.io/static/cloud.png")
         else:
             resp.message("Contact Not Found")
     else:
         resp.message("Invalid Syntax")
     return str(resp)
+
 
 
 if __name__ == '__main__':
