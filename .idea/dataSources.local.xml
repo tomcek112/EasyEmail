@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="dataSourceStorageLocal">
+    <data-source name="Email-Bodies" uuid="0132bd03-e73d-4a78-949e-50abbdaf6a2b">
+      <secret-storage>master_key</secret-storage>
+    </data-source>
+  </component>
+</project>
