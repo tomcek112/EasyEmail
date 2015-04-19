@@ -1,11 +1,11 @@
 from twilio.rest import TwilioRestClient
-from flask import Flask, request , make_response
+from flask import Flask, request , make_response,render_template,redirect
 
 from pytagcloud import create_tag_image, make_tags
 from pytagcloud.lang.counter import get_tag_counts
 
 from reduction import *
-
+from sentiment import *
 import os
 
 import twilio.twiml
@@ -52,7 +52,8 @@ def updatedb(from_add,mes):
         table.insert(dict(from_addr=from_add, messages = mes))
 
 def wordcloud(user):
-    os.remove('./static/cloud.png')
+    if os.path.exists('./static/cloud.png'):
+        os.remove('./static/cloud.png')
     text = user['messages']
     tags = make_tags(get_tag_counts(text), maxsize=100)
     create_tag_image(tags, './static/cloud.png', size=(900, 600), fontname='Cuprum')
@@ -75,7 +76,15 @@ def paid_respond():
         resp.message("Invalid Syntax")
     return str(resp)
 
-
+@app.route("/home", methods=['GET', 'POST'])
+def view():
+    if request.method == 'POST':
+        usr = table.find_one(from_addr=request.form.get('user'))
+        if usr:
+            li = senti_analysis(usr['messages'])
+            return render_template('line.html', lis=li)
+            print("Alright bae")
+    return render_template('index.html')
 
 if __name__ == '__main__':
     app.run(port=8000,debug=True)

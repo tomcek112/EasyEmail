@@ -1,0 +1,45 @@
+<!doctype html>
+<html>
+	<head>
+		<title>Line Chart</title>
+		<script src="../static/Chart.js"></script>
+	</head>
+	<body>
+		<div style="width:40%" >
+			<div>
+				<canvas id="canvas" height="800" width="600"></canvas>
+			</div>
+		</div>
+
+
+	<script>
+		var randomScalingFactor = function(){ return Math.round(Math.random()*100)};
+		var lineChartData = {
+			labels : ["6:00am","10:00am","12:00pm","3:00pm","6:00pm","8:00pm","10:00pm","12:00am"],
+			datasets : [
+				{
+					label: "Sentiment Analysis",
+					fillColor : "rgba(180,120,180,0.5)",
+					strokeColor : "rgba(220,220,220,1)",
+					pointColor : "rgba(220,220,220,1)",
+					pointStrokeColor : "#fff",
+					pointHighlightFill : "#fff",
+					pointHighlightStroke : "rgba(220,220,220,1)",
+					data :  {{lis}}
+                },
+				
+			]
+
+		}
+
+	window.onload = function(){
+		var ctx = document.getElementById("canvas").getContext("2d");
+		window.myLine = new Chart(ctx).Line(lineChartData, {
+			responsive: true
+		});
+	}
+
+
+	</script>
+	</body>
+</html>
