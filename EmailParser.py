@@ -38,10 +38,10 @@ def dataparser(sub, from_add, text):
 
 
 def twil(sub,from_add,text):
-    account_sid = "ACd88394ca183bcaf1f02a2e8bcf5ebf55"
-    auth_token = "5582a52e32afa122e7492d8a506b926d"
+    account_sid = "XXXXXXXXXXXXXXXXXXXX"   #get the XXXXXXXXXX stuff from your account
+    auth_token = "XXXXXXXXXXXXXXXXX"
     client = TwilioRestClient(account_sid, auth_token)
-    message = client.messages.create(to="+447831002358",from_="+447903530001",body="from:"+from_add+" subject:"+sub+"\nbody:"+ text)
+    message = client.messages.create(to="XXXXXXXXxX",from_="XXXXXXXXXXX",body="from:"+from_add+" subject:"+sub+" message:"+ text)
 
 def updatedb(from_add,mes):
     usr=table.find_one(from_addr=from_add)
@@ -69,7 +69,7 @@ def paid_respond():
         usr = table.find_one(from_addr=addr)
         if usr:
              wordcloud(usr)
-             resp.message("Image Generated https://a7e92201.ngrok.io/static/cloud.png")
+             resp.message("Image Generated XXXXXXXXXXXXXXXX/static/cloud.png") #replace XXXXXX with your server
         else:
             resp.message("Contact Not Found")
     else:
@@ -83,7 +83,6 @@ def view():
         if usr:
             li = senti_analysis(usr['messages'])
             return render_template('line.html', lis=li)
-            print("Alright bae")
     return render_template('index.html')
 
 if __name__ == '__main__':
